@@ -37,14 +37,14 @@ if page == "Data Loading":
     st.dataframe(df.head())
 
 # --- perubahan: Halaman Feature Engineering
-elif page == "Feature Engineering":
-    st.title("Feature Engineering")
-    st.write("### Processing text data into features...")
-    df = st.session_state.df
-    X, vectorizer = feature_engineering(df['review'])  # Asumsikan kolom teks namanya 'review'
-    st.session_state.X = X
-    st.session_state.vectorizer = vectorizer
-    st.success("Feature engineering completed!")
+# elif page == "Feature Engineering":
+#     st.title("Feature Engineering")
+#     st.write("### Processing text data into features...")
+#     df = st.session_state.df
+#     X, vectorizer = feature_engineering(df['review'])  # Asumsikan kolom teks namanya 'review'
+#     st.session_state.X = X
+#     st.session_state.vectorizer = vectorizer
+#     st.success("Feature engineering completed!")
 
 # --- perubahan: Halaman Model Training
 elif page == "Model Training":
