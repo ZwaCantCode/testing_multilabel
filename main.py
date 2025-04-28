@@ -1,6 +1,6 @@
 from utils.data_loader import load_data
-#from utils.feature_engineering import feature_engineering  # --- perubahan: Import feature engineering
-from utils.model import train_model, predict  # --- perubahan: Import training dan prediksi
+# from utils.feature_engineering import feature_engineering  # --- perubahan: Import feature engineering
+# from utils.model import train_model, predict  # --- perubahan: Import training dan prediksi
 import streamlit as st
 
 # --- perubahan: Konfigurasi halaman
@@ -47,18 +47,18 @@ if page == "Data Loading":
 #     st.success("Feature engineering completed!")
 
 # --- perubahan: Halaman Model Training
-elif page == "Model Training":
-    st.title("Model Training")
-    if st.session_state.X is None:
-        st.warning("Please complete feature engineering first.")
-    else:
-        model_choice = st.selectbox("Choose a model", ["Logistic Regression", "Random Forest", "XGBoost"])
-        if st.button("Train Model"):
-            model, label_columns = train_model(st.session_state.X, st.session_state.df, model_choice)
-            st.session_state.trained_model = model
-            st.session_state.model_name = model_choice
-            st.session_state.label_columns = label_columns
-            st.success(f"Model {model_choice} trained successfully!")
+# elif page == "Model Training":
+#     st.title("Model Training")
+#     if st.session_state.X is None:
+#         st.warning("Please complete feature engineering first.")
+#     else:
+#         model_choice = st.selectbox("Choose a model", ["Logistic Regression", "Random Forest", "XGBoost"])
+#         if st.button("Train Model"):
+#             model, label_columns = train_model(st.session_state.X, st.session_state.df, model_choice)
+#             st.session_state.trained_model = model
+#             st.session_state.model_name = model_choice
+#             st.session_state.label_columns = label_columns
+#             st.success(f"Model {model_choice} trained successfully!")
 
 # --- perubahan: Halaman Prediction
 elif page == "Prediction":
