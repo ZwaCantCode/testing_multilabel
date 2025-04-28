@@ -27,7 +27,7 @@ if 'X' not in st.session_state:  # Session state feature engineering
 
 # Sidebar
 st.sidebar.title("Hai Jo")
-page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering", "Model Training", "Prediction"])
+page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering", "Model Training"])
 
 st.title("Automotive Reviews Multi-label Text Classification")
 st.markdown("Multi-label classification for automotive reviews across different aspects: fuel, machine, and parts.")
