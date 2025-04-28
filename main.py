@@ -1,5 +1,5 @@
 from utils.data_loader import load_data
-from utils.feature_engineering import feature_engineering  # --- perubahan: Import feature engineering
+#from utils.feature_engineering import feature_engineering  # --- perubahan: Import feature engineering
 from utils.model import train_model, predict  # --- perubahan: Import training dan prediksi
 import streamlit as st
 
