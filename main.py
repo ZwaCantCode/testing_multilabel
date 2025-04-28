@@ -78,16 +78,3 @@ if page == "Data Loading":
 #             st.session_state.model_name = model_choice
 #             st.session_state.label_columns = label_columns
 #             st.success(f"Model {model_choice} trained successfully!")
-
-# Prediction
-elif page == "Prediction":
-    st.title("Prediction")
-    if st.session_state.trained_model is None:
-        st.warning("Please train a model first.")
-    else:
-        input_text = st.text_area("Enter a review text to predict:")
-        if st.button("Predict"):
-            features = st.session_state.vectorizer.transform([input_text])
-            preds = predict(st.session_state.trained_model, features, st.session_state.label_columns)
-            st.write("### Prediction Results:")
-            st.json(preds)
