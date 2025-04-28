@@ -91,10 +91,3 @@ elif page == "Prediction":
             preds = predict(st.session_state.trained_model, features, st.session_state.label_columns)
             st.write("### Prediction Results:")
             st.json(preds)
-
-
-st.subheader("Dataset Overview")
-df = st.session_state.df
-st.write(f"Number of samples: {df.shape[0]}")
-st.write(f"Number of features: {df.shape[1]}")
-st.dataframe(df.head(5))
