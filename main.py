@@ -1,5 +1,4 @@
 from utils.data_loader import load_data
-from utils.feature_engineering import feature_engineering
 import streamlit as st
 
 # Konfigurasi halaman
@@ -22,9 +21,6 @@ if 'label_columns' not in st.session_state:
 if 'df' not in st.session_state:
     st.session_state.df = load_data()
 
-# Sidebar
-page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering"])
-
 st.title("Automotive Reviews Multi-label Text Classification")
 st.markdown("Multi-label classification for automotive reviews across different aspects: fuel, machine, and parts.")
 
@@ -38,6 +34,7 @@ This application demonstrates text classification that can predict multiple labe
 1. **Dataset Explorer** - Explore and understand the dataset
 2. **Model Training** - Train and evaluate multi-label classification models
 3. **Prediction** - Make predictions on new text inputs
+4. **Feature Engineering**
 
 Use the sidebar to navigate between pages.
 """)
@@ -51,40 +48,3 @@ if page == "Data Loading":
     st.write(f"Number of features: {df.shape[1]}")
     st.dataframe(df.head())
     
-# Feature Engineering
-elif page == "Feature Engineering":
-    st.header("Feature Engineering")
-    df = st.session_state.df
-
-    # Pilih kolom teks
-    text_columns = df.columns.tolist()
-    selected_column = st.selectbox(
-        "Pilih kolom teks untuk ekstraksi fitur:", 
-        text_columns, 
-        index=text_columns.index("sentence") if "sentence" in text_columns else 0
-    )
-
-    if st.button("Lakukan Feature Engineering"):
-        X, vectorizer = feature_engineering(df[selected_column])
-        st.session_state.X = X
-        st.session_state.vectorizer = vectorizer
-        st.success(f"Feature engineering selesai untuk kolom '{selected_column}'!")
-
-        # Tampilkan info hasil ekstraksi
-        st.subheader("Hasil Ekstraksi Fitur")
-        vocab = vectorizer.get_feature_names_out()
-        st.write(f"Jumlah fitur (kata unik): {len(vocab)}")
-
-        # Konversi hasil ke DataFrame untuk tampilan
-        import pandas as pd
-        import numpy as np
-
-        try:
-            X_array = X.toarray()  # pastikan dalam bentuk array
-        except:
-            X_array = X  # kalau sudah array
-
-        df_features = pd.DataFrame(X_array, columns=vocab)
-
-        # Tampilkan hanya 10 baris pertama
-        st.dataframe(df_features.head(10))
