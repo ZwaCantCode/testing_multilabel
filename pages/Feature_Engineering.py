@@ -14,22 +14,11 @@ st.header("Feature Engineering")
 df = st.session_state.df
 
 # Pilih kolom teks
-text_columns = df.columns.tolist()
-selected_column = st.selectbox(
-    "Pilih kolom:", 
-    text_columns, 
-    index=text_columns.index("sentence") if "sentence" in text_columns else 0
-)
-
 if st.button("Run"):
-    X, vectorizer = feature_engineering(df[selected_column])
+    X, vectorizer = feature_engineering(df['sentence'])
     st.session_state.X = X
     st.session_state.vectorizer = vectorizer
-    st.success(f"Feature engineering selesai untuk kolom '{selected_column}'!")
-
-    st.subheader("Hasil")
-    vocab = vectorizer.get_feature_names_out()
-    st.write(f"Jumlah (kata unik): {len(vocab)}")
+    st.success("Feature engineering selesai untuk kolom 'sentence'!")
 
     import pandas as pd
     import numpy as np
@@ -37,9 +26,13 @@ if st.button("Run"):
     try:
         X_array = X.toarray()
     except:
-        X_array = X 
+        X_array = X
 
+    vocab = vectorizer.get_feature_names_out()
     df_features = pd.DataFrame(X_array, columns=vocab)
-    df_features.insert(0, "sentence", df[selected_column].values)
 
+    df_features.insert(0, "sentence", df['sentence'].values)
+
+    st.subheader("Hasil Ekstraksi Fitur (TF-IDF)")
+    st.write(f"Jumlah fitur (kata unik): {len(vocab)}")
     st.dataframe(df_features.head(10))
