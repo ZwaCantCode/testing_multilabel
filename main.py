@@ -56,12 +56,35 @@ elif page == "Feature Engineering":
     st.header("Feature Engineering")
     df = st.session_state.df
 
-    # Tampilkan kolom-kolom yang tersedia
+    # Pilih kolom teks
     text_columns = df.columns.tolist()
-    selected_column = st.selectbox("Pilih kolom teks untuk ekstraksi fitur:", text_columns, index=text_columns.index("sentence") if "sentence" in text_columns else 0)
+    selected_column = st.selectbox(
+        "Pilih kolom teks untuk ekstraksi fitur:", 
+        text_columns, 
+        index=text_columns.index("sentence") if "sentence" in text_columns else 0
+    )
 
     if st.button("Lakukan Feature Engineering"):
         X, vectorizer = feature_engineering(df[selected_column])
         st.session_state.X = X
         st.session_state.vectorizer = vectorizer
         st.success(f"Feature engineering selesai untuk kolom '{selected_column}'!")
+
+        # Tampilkan info hasil ekstraksi
+        st.subheader("Hasil Ekstraksi Fitur")
+        vocab = vectorizer.get_feature_names_out()
+        st.write(f"Jumlah fitur (kata unik): {len(vocab)}")
+
+        # Konversi hasil ke DataFrame untuk tampilan
+        import pandas as pd
+        import numpy as np
+
+        try:
+            X_array = X.toarray()  # pastikan dalam bentuk array
+        except:
+            X_array = X  # kalau sudah array
+
+        df_features = pd.DataFrame(X_array, columns=vocab)
+
+        # Tampilkan hanya 10 baris pertama
+        st.dataframe(df_features.head(10))
