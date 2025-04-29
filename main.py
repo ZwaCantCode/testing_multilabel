@@ -1,7 +1,5 @@
 from utils.data_loader import load_data
 import streamlit as st
-from utils.feature_engineering import feature_engineering
-# from utils.model import train_model, predict
 
 # Konfigurasi halaman
 st.set_page_config(
