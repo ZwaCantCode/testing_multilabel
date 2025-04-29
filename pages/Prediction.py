@@ -44,8 +44,12 @@ if st.button("Predict"):
 
         # Define label columns
         label_columns = ['fuel_negative', 'fuel_neutral', 'fuel_positive',
-                         'machine_negative', 'machine_neutral', 'machine_positive',
-                         'part_negative', 'part_neutral', 'part_positive']
+            'machine_negative', 'machine_neutral', 'machine_positive',
+            'part_negative', 'part_neutral', 'part_positive',
+            'others_negative', 'others_neutral', 'others_positive',
+            'price_negative', 'price_neutral', 'price_positive',
+            'service_negative', 'service_neutral', 'service_positive'
+        ]
 
         # Create multilabel target for training
         y_multilabel = create_multilabel_target(df)
@@ -60,7 +64,7 @@ if st.button("Predict"):
         input_tfidf = vectorizer.transform([preprocessed_input])
 
         # Train model
-        model = get_multilabel_classifier("SVM", n_estimators=100)
+        model = get_multilabel_classifier("SVM", C=1.0)
         model.fit(X_train_tfidf, y_train)
 
         # Save to session state for future use
@@ -94,17 +98,17 @@ if st.button("Predict"):
             has_predictions = True
 
     if has_predictions:
-        # for label in results:
-        #     st.write(f"- {label}")
-
-        # Display visual representation by category
         st.subheader("Prediction Summary")
 
         # Group by category
         fuel_preds = [col for col in results if col.startswith('fuel_')]
         machine_preds = [col for col in results if col.startswith('machine_')]
         part_preds = [col for col in results if col.startswith('part_')]
+        others_preds = [col for col in results if col.startswith('others_')]
+        price_preds = [col for col in results if col.startswith('price_')]
+        service_preds = [col for col in results if col.startswith('service_')]
 
+        # Baris pertama: Fuel, Machine, Part
         col1, col2, col3 = st.columns(3)
         with col1:
             st.write("**Fuel sentiment:**")
@@ -135,5 +139,38 @@ if st.button("Predict"):
                         unsafe_allow_html=True)
             else:
                 st.write("No prediction")
+
+        # Baris kedua: Others, Price, Service
+        col4, col5, col6 = st.columns(3)
+        with col4:
+            st.write("**Others sentiment:**")
+            if others_preds:
+                for pred in others_preds:
+                    st.markdown(
+                        f"<span style='color: orange;'>- {pred.replace('others_', '')}</span>",
+                        unsafe_allow_html=True)
+            else:
+                st.write("No prediction")
+
+        with col5:
+            st.write("**Price sentiment:**")
+            if price_preds:
+                for pred in price_preds:
+                    st.markdown(
+                        f"<span style='color: brown;'>- {pred.replace('price_', '')}</span>",
+                        unsafe_allow_html=True)
+            else:
+                st.write("No prediction")
+
+        with col6:
+            st.write("**Service sentiment:**")
+            if service_preds:
+                for pred in service_preds:
+                    st.markdown(
+                        f"<span style='color: purple;'>- {pred.replace('service_', '')}</span>",
+                        unsafe_allow_html=True)
+            else:
+                st.write("No prediction")
     else:
         st.write("No labels predicted.")
+
