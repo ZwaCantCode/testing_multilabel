@@ -33,6 +33,6 @@ if st.button("Run"):
 
     df_features.insert(0, "sentence", df['sentence'].values)
 
-    st.subheader("Hasil Ekstraksi Fitur (TF-IDF)")
-    st.write(f"Jumlah fitur (kata unik): {len(vocab)}")
+    st.subheader("Hasil (TF-IDF)")
+    st.write(f"Jumlah (kata unik): {len(vocab)}")
     st.dataframe(df_features.head(10))
