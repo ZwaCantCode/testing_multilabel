@@ -1,6 +1,6 @@
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.neighbors import KNeighborsClassifier
 from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, multilabel_confusion_matrix
@@ -23,16 +23,15 @@ def get_multilabel_classifier(model_name, **params):
     """
     Return a multi-label classifier with the specified base model
     """
-    if model_name == "Random Forest":
-        base_classifier = RandomForestClassifier(
-            n_estimators=params.get('n_estimators', 100),
-            random_state=42
-        )
-    elif model_name == "SVM":
+    if model_name == "SVM":
         base_classifier = SVC(
             C=params.get('C', 1.0),
             probability=True,
             random_state=42
+        )
+    elif model_name == "KNN":
+        base_classifier = KNeighborsClassifier(
+            n_neighbors=params.get('n_neighbors', 5)
         )
     elif model_name == "Multinomial Naive Bayes":
         base_classifier = MultinomialNB(
@@ -66,9 +65,10 @@ def evaluate_multilabel_model(model, X_test, y_test, label_columns):
 
     # Add columns for actual and predicted values
     for i, label_col in enumerate(label_columns):
-        comparison_df[f'{label_col}_actual'] = y_test[label_col].reset_index(
-            drop=True)
+        comparison_df[f'{label_col}_actual'] = y_test[label_col].reset_index(drop=True)
         comparison_df[f'{label_col}_predicted'] = y_pred.toarray()[:, i]
-        comparison_df[f'{label_col}_match'] = comparison_df[f'{label_col}_actual'] == comparison_df[f'{label_col}_predicted']
+        comparison_df[f'{label_col}_match'] = (
+            comparison_df[f'{label_col}_actual'] == comparison_df[f'{label_col}_predicted']
+        )
 
     return accuracy, mcm, comparison_df, y_pred

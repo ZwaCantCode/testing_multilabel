@@ -33,7 +33,7 @@ if model_option == "SVM":
 
 elif model_option == "KNN":
     model_params['n_neighbors'] = st.slider(
-        "Jumlah Tetangga Terdekat (k)", min_value=1, max_value=30, value=5, step=1)
+        "Nearest Neighbors (k)", min_value=1, max_value=30, value=5, step=1)
 
 elif model_option == "NB":
     model_params['alpha'] = st.slider(
