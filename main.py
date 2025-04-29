@@ -23,7 +23,7 @@ if 'df' not in st.session_state:
     st.session_state.df = load_data()
 
 # Sidebar
-page = st.sidebar.selectbox("Choose a page", ["Data Loading"], ["Feature Engineering"])
+page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering"])
 
 st.title("Automotive Reviews Multi-label Text Classification")
 st.markdown("Multi-label classification for automotive reviews across different aspects: fuel, machine, and parts.")
