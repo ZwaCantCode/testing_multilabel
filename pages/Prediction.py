@@ -104,11 +104,7 @@ if st.button("Predict"):
         fuel_preds = [col for col in results if col.startswith('fuel_')]
         machine_preds = [col for col in results if col.startswith('machine_')]
         part_preds = [col for col in results if col.startswith('part_')]
-        others_preds = [col for col in results if col.startswith('others_')]
-        price_preds = [col for col in results if col.startswith('price_')]
-        service_preds = [col for col in results if col.startswith('service_')]
 
-        # Baris pertama: Fuel, Machine, Part
         col1, col2, col3 = st.columns(3)
         with col1:
             st.write("**Fuel sentiment:**")
@@ -139,38 +135,5 @@ if st.button("Predict"):
                         unsafe_allow_html=True)
             else:
                 st.write("No prediction")
-
-        # Baris kedua: Others, Price, Service
-        col4, col5, col6 = st.columns(3)
-        with col4:
-            st.write("**Others sentiment:**")
-            if others_preds:
-                for pred in others_preds:
-                    st.markdown(
-                        f"<span style='color: orange;'>- {pred.replace('others_', '')}</span>",
-                        unsafe_allow_html=True)
-            else:
-                st.write("No prediction")
-
-        with col5:
-            st.write("**Price sentiment:**")
-            if price_preds:
-                for pred in price_preds:
-                    st.markdown(
-                        f"<span style='color: brown;'>- {pred.replace('price_', '')}</span>",
-                        unsafe_allow_html=True)
-            else:
-                st.write("No prediction")
-
-        with col6:
-            st.write("**Service sentiment:**")
-            if service_preds:
-                for pred in service_preds:
-                    st.markdown(
-                        f"<span style='color: purple;'>- {pred.replace('service_', '')}</span>",
-                        unsafe_allow_html=True)
-            else:
-                st.write("No prediction")
     else:
         st.write("No labels predicted.")
-
