@@ -1,4 +1,5 @@
 from utils.data_loader import load_data
+from utils.feature_engineering import feature_engineering
 import streamlit as st
 
 # Konfigurasi halaman
@@ -22,7 +23,7 @@ if 'df' not in st.session_state:
     st.session_state.df = load_data()
 
 # Sidebar
-page = st.sidebar.selectbox("Choose a page", ["Data Loading"])
+page = st.sidebar.selectbox("Choose a page", ["Data Loading"], ["Feature Engineering"])
 
 st.title("Automotive Reviews Multi-label Text Classification")
 st.markdown("Multi-label classification for automotive reviews across different aspects: fuel, machine, and parts.")
@@ -49,3 +50,13 @@ if page == "Data Loading":
     st.write(f"Number of samples: {df.shape[0]}")
     st.write(f"Number of features: {df.shape[1]}")
     st.dataframe(df.head())
+    
+# Feature Engineering
+elif page == "Feature Engineering":
+    st.header("Feature Engineering")
+    df = st.session_state.df
+    st.write("### Melakukan ekstraksi fitur dari kolom teks...")
+    X, vectorizer = feature_engineering(df['review'])  # Pastikan kolom teks bernama 'review'
+    st.session_state.X = X
+    st.session_state.vectorizer = vectorizer
+    st.success("Feature engineering selesai!")
