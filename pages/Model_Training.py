@@ -14,7 +14,7 @@ df = st.session_state.df
 
 # Model selection
 model_option = st.selectbox(
-    "Select Model", ["SVM", "KNN", "NB"])
+    "Select Model", ["SVM", "KNN", "Multinomial Naive Bayes"])
 
 # Vectorization parameters
 st.subheader("Text Vectorization Parameters")
@@ -35,7 +35,7 @@ elif model_option == "KNN":
     model_params['n_neighbors'] = st.slider(
         "Nearest Neighbors (k)", min_value=1, max_value=30, value=5, step=1)
 
-elif model_option == "NB":
+elif model_option == "Multinomial Naive Bayes":
     model_params['alpha'] = st.slider(
         "Smoothing Parameter (alpha)", min_value=0.01, max_value=1.0, value=1.0, step=0.01)
 
