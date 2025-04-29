@@ -55,8 +55,13 @@ if page == "Data Loading":
 elif page == "Feature Engineering":
     st.header("Feature Engineering")
     df = st.session_state.df
-    st.write("### Melakukan ekstraksi fitur dari kolom teks...")
-    X, vectorizer = feature_engineering(df['review'])  # Pastikan kolom teks bernama 'review'
-    st.session_state.X = X
-    st.session_state.vectorizer = vectorizer
-    st.success("Feature engineering selesai!")
+
+    st.write("Kolom yang tersedia di dataset:", df.columns.tolist())
+
+    if 'clean_text' in df.columns:
+        X, vectorizer = feature_engineering(df['sentence'])  
+        st.session_state.X = X
+        st.session_state.vectorizer = vectorizer
+        st.success("Feature engineering selesai!")
+    else:
+        st.error("Kolom 'sentence' tidak ditemukan di dataset.")
