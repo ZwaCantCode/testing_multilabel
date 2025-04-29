@@ -14,7 +14,7 @@ df = st.session_state.df
 
 # Model selection
 model_option = st.selectbox(
-    "Select Model", ["Random Forest", "SVM", "Multinomial Naive Bayes"])
+    "Select Model", ["SVM", "KNN", "NB"])
 
 # Vectorization parameters
 st.subheader("Text Vectorization Parameters")
@@ -27,15 +27,18 @@ test_size = st.slider("Test Size", min_value=0.1,
 
 # Model-specific parameters
 model_params = {}
-if model_option == "Random Forest":
-    model_params['n_estimators'] = st.slider(
-        "Number of Trees", min_value=10, max_value=200, value=100, step=10)
-elif model_option == "SVM":
-    model_params['C'] = st.slider("Regularization Parameter (C)",
-                                  min_value=0.01, max_value=10.0, value=1.0, step=0.01)
-elif model_option == "Multinomial Naive Bayes":
-    model_params['alpha'] = st.slider("Smoothing Parameter (alpha)",
-                                      min_value=0.01, max_value=1.0, value=1.0, step=0.01)
+if model_option == "SVM":
+    model_params['C'] = st.slider(
+        "Regularization Parameter (C)", min_value=0.01, max_value=10.0, value=1.0, step=0.01)
+
+elif model_option == "KNN":
+    model_params['n_neighbors'] = st.slider(
+        "Jumlah Tetangga Terdekat (k)", min_value=1, max_value=30, value=5, step=1)
+
+elif model_option == "NB":
+    model_params['alpha'] = st.slider(
+        "Smoothing Parameter (alpha)", min_value=0.01, max_value=1.0, value=1.0, step=0.01)
+
 
 # Processing
 if st.button("Train Model"):

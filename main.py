@@ -22,11 +22,9 @@ if 'label_columns' not in st.session_state:
 
 if 'df' not in st.session_state:
     st.session_state.df = load_data()
-if 'X' not in st.session_state:  # Session state feature engineering
-    st.session_state.X = None
 
 # Sidebar
-page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering", "Model Training"])
+page = st.sidebar.selectbox("Choose a page", ["Data Loading"])
 
 st.title("Automotive Reviews Multi-label Text Classification")
 st.markdown("Multi-label classification for automotive reviews across different aspects: fuel, machine, and parts.")
@@ -53,27 +51,3 @@ if page == "Data Loading":
     st.write(f"Number of samples: {df.shape[0]}")
     st.write(f"Number of features: {df.shape[1]}")
     st.dataframe(df.head())
-
-# Feature Engineering
-elif page == "Feature Engineering":
-    st.title("Feature Engineering")
-    st.write("### Processing text data into features...")
-    df = st.session_state.df
-    X, vectorizer = feature_engineering(df['review'])  # Asumsikan kolom teks namanya 'review'
-    st.session_state.X = X
-    st.session_state.vectorizer = vectorizer
-    st.success("Feature engineering completed!")
-
-# Model Training
-# elif page == "Model Training":
-#     st.title("Model Training")
-#     if st.session_state.X is None:
-#         st.warning("Please complete feature engineering first.")
-#     else:
-#         model_choice = st.selectbox("Choose a model", ["Logistic Regression", "Random Forest", "XGBoost"])
-#         if st.button("Train Model"):
-#             model, label_columns = train_model(st.session_state.X, st.session_state.df, model_choice)
-#             st.session_state.trained_model = model
-#             st.session_state.model_name = model_choice
-#             st.session_state.label_columns = label_columns
-#             st.success(f"Model {model_choice} trained successfully!")
