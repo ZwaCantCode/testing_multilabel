@@ -56,12 +56,12 @@ elif page == "Feature Engineering":
     st.header("Feature Engineering")
     df = st.session_state.df
 
-    st.write("Kolom yang tersedia di dataset:", df.columns.tolist())
+    # Tampilkan kolom-kolom yang tersedia
+    text_columns = df.columns.tolist()
+    selected_column = st.selectbox("Pilih kolom teks untuk ekstraksi fitur:", text_columns, index=text_columns.index("sentence") if "sentence" in text_columns else 0)
 
-    if 'clean_text' in df.columns:
-        X, vectorizer = feature_engineering(df['sentence'])  
+    if st.button("Lakukan Feature Engineering"):
+        X, vectorizer = feature_engineering(df[selected_column])
         st.session_state.X = X
         st.session_state.vectorizer = vectorizer
-        st.success("Feature engineering selesai!")
-    else:
-        st.error("Kolom 'sentence' tidak ditemukan di dataset.")
+        st.success(f"Feature engineering selesai untuk kolom '{selected_column}'!")
