@@ -1,7 +1,7 @@
 from utils.data_loader import load_data
-# from utils.feature_engineering import feature_engineering  # feature engineering
-# from utils.model import train_model, predict  # training dan prediksi
 import streamlit as st
+from utils.feature_engineering import feature_engineering
+# from utils.model import train_model, predict
 
 # Konfigurasi halaman
 st.set_page_config(
@@ -26,7 +26,6 @@ if 'X' not in st.session_state:  # Session state feature engineering
     st.session_state.X = None
 
 # Sidebar
-st.sidebar.title("Hai Jo")
 page = st.sidebar.selectbox("Choose a page", ["Data Loading", "Feature Engineering", "Model Training"])
 
 st.title("Automotive Reviews Multi-label Text Classification")
@@ -56,14 +55,14 @@ if page == "Data Loading":
     st.dataframe(df.head())
 
 # Feature Engineering
-# elif page == "Feature Engineering":
-#     st.title("Feature Engineering")
-#     st.write("### Processing text data into features...")
-#     df = st.session_state.df
-#     X, vectorizer = feature_engineering(df['review'])  # Asumsikan kolom teks namanya 'review'
-#     st.session_state.X = X
-#     st.session_state.vectorizer = vectorizer
-#     st.success("Feature engineering completed!")
+elif page == "Feature Engineering":
+    st.title("Feature Engineering")
+    st.write("### Processing text data into features...")
+    df = st.session_state.df
+    X, vectorizer = feature_engineering(df['review'])  # Asumsikan kolom teks namanya 'review'
+    st.session_state.X = X
+    st.session_state.vectorizer = vectorizer
+    st.success("Feature engineering completed!")
 
 # Model Training
 # elif page == "Model Training":
