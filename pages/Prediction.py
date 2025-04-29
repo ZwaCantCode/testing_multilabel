@@ -40,7 +40,7 @@ if st.button("Predict"):
     else:
         # Train a default model if none is available
         model_status.info(
-            "No trained model found. Training a default model Random Forest....")
+            "No trained model found. Training a default model SVM....")
 
         # Define label columns
         label_columns = ['fuel_negative', 'fuel_neutral', 'fuel_positive',
@@ -60,13 +60,13 @@ if st.button("Predict"):
         input_tfidf = vectorizer.transform([preprocessed_input])
 
         # Train model
-        model = get_multilabel_classifier("Random Forest", n_estimators=100)
+        model = get_multilabel_classifier("SVM", n_estimators=100)
         model.fit(X_train_tfidf, y_train)
 
         # Save to session state for future use
         st.session_state.trained_model = model
         st.session_state.vectorizer = vectorizer
-        st.session_state.model_name = "Random Forest (default)"
+        st.session_state.model_name = "SVM (default)"
         st.session_state.label_columns = label_columns
 
     # Make prediction
