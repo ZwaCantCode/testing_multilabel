@@ -39,12 +39,11 @@ This application demonstrates text classification that can predict multiple labe
 Use the sidebar to navigate between pages.
 """)
 
-# Data Loading
-if page == "Data Loading":
-    st.title("Data Loading")
-    st.write("### Dataset Overview")
-    df = st.session_state.df
-    st.write(f"Number of samples: {df.shape[0]}")
-    st.write(f"Number of features: {df.shape[1]}")
-    st.dataframe(df.head())
+
+st.title("Data Loading")
+st.write("### Dataset Overview")
+df = st.session_state.df
+st.write(f"Number of samples: {df.shape[0]}")
+st.write(f"Number of features: {df.shape[1]}")
+st.dataframe(df.head())
     
